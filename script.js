@@ -15,8 +15,21 @@ function divide (a, b) {
     return a / b;
 }
 
-console.log(add(2, 4));
-console.log(subtract(2, 4));
-console.log(multiply(2, 4));
-console.log(divide(2, 4));
+function operate (a, b, operator) {
+    if (operator == `+`) {
+        return add(a, b);
+    } else if (operator == `-`) {
+        return subtract(a, b);
+    } else if (operator == `*`) {
+        return multiply(a, b);
+    } else if (operator == `/`) {
+        return divide(a, b);
+    } else {
+        return "Could not calculate.";
+    }
+}
+
+let numA = 0;
+let numB = 0;
+let operator = ``;
 
