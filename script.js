@@ -2,8 +2,13 @@
 
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
-const clearButton = document.querySelector("#ac");
+const clearAllButton = document.querySelector("#ac");
 const display = document.querySelector("#display")
+
+let numA = null;
+let numB = null;
+let operator = "";
+let lastUsedOperator = "";
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -19,8 +24,12 @@ operatorButtons.forEach((button) => {
     });
 });
 
-clearButton.addEventListener("click", () => {
-    console.log(clearButton.id);
+clearAllButton.addEventListener("click", () => {
+    console.log(clearAllButton.id);
+    numA = null;
+    numB = null;
+    operator = "";
+    lastUsedOperator = "";
     clearDisplay();
 });
 
@@ -32,11 +41,23 @@ clearButton.addEventListener("click", () => {
 // For either, check if there is no value so 0 or null.
 // If so, allow the negative sign to be pressed.
 function runNumber (number) {
-    
-}
-
-function clearDisplay () {
-    display.textContent = '';
+    if (number == "negative") {
+        if (display.textContent == 0 || display.textContent == "") {
+            numA = "-0";
+            display.textContent = numA;
+            return;
+        }
+        return;
+    }
+    if (operator == "" || operator == "equals") {
+        if (numA == null) numA = 0;
+        numA = Number(`${numA}` + number);
+        display.textContent = numA;
+    }  else {
+        if (numB == null) numB = 0;
+        numB = Number(`${numB}` + number);
+        display.textContent = numB;
+    }
 }
 
 // Ex. numA gets typed, and then an operator is pressed. So now updateDisplay should update numB
@@ -65,12 +86,36 @@ function clearDisplay () {
 // If not, don't do calculations and set operator to be what was pressed.
 // Then in either case, set numB to be nothing.
 function runOperation (symbol) {
-    
+    if (numA == null && numB == null) return;
+
+    if (symbol == "equals") {
+        if (numA != null && numB != null && (operator != "" || operator != "equals")) {
+            numA = operate(numA, numB, operator);
+            display.textContent = numA;
+        } else if (numA != null && numB != null && operator == "equals") {
+            numA = operate(numA, numB, lastUsedOperator);
+            display.textContent = numA;
+        } else if (numA != null && (operator != "" || operator != "equals")) {
+            numB = numA;
+            numA = operate(numA, numB, operator);
+            display.textContent = numA;
+        } else {
+            return;
+        }
+    } else {
+        if (numA != null && numB != null && operator != "" && operator != "equals") {
+            numA = operate(numA, numB, operator);
+            display.textContent = numA;
+        }
+        numB = null;
+    }
+    if (symbol != "equals") lastUsedOperator = symbol;
+    operator = symbol;
 }
 
-let numA = null;
-let numB = null;
-let operator = "";
+function clearDisplay () {
+    display.textContent = '';
+}
 
 function add (a, b) {
     return a + b;
