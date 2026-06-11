@@ -12,24 +12,18 @@ let lastUsedOperator = "";
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.id);
         runNumber(button.id);
     });
 });
 
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.id);
         runOperation(button.id);
     });
 });
 
 clearAllButton.addEventListener("click", () => {
-    console.log(clearAllButton.id);
-    numA = null;
-    numB = null;
-    operator = "";
-    lastUsedOperator = "";
+    restart();
     clearDisplay();
 });
 
@@ -57,6 +51,13 @@ function runNumber (number) {
         if (numB == null) numB = 0;
         numB = Number(`${numB}` + number);
         display.textContent = numB;
+        return;
+    }
+    if (numA != null && numB != null) {
+        restart();
+        if (numA == null) numA = 0;
+        numA = Number(`${numA}` + number);
+        display.textContent = numA;
     }
 }
 
@@ -115,6 +116,13 @@ function runOperation (symbol) {
 
 function clearDisplay () {
     display.textContent = '';
+}
+
+function restart () {
+    numA = null;
+    numB = null;
+    operator = "";
+    lastUsedOperator = "";
 }
 
 function add (a, b) {
