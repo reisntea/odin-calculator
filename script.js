@@ -13,6 +13,7 @@ numberButtons.forEach((button) => {
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
         console.log(button.id);
+        runOperation(button.id);
     });
 });
 
@@ -33,9 +34,25 @@ function clearDisplay () {
     display.textContent = '';
 }
 
-let numA;
-let numB;
-let operator = ``;
+function runOperation (symbol) {
+    // Checks if numA has a value, if not set it to the value in display. If so, set numB to the value in display.
+    if (numA == null) {
+        numA = display.textContent;
+    } else {
+        numB = display.textContent;
+    }
+
+    if (symbol == "equals" && operator != "equals") {
+        clearDisplay();
+        updateDisplay(operate(numA, numB, operator));
+        numA = display.textContent;
+    }
+    operator = symbol;
+}
+
+let numA = null;
+let numB = null;
+let operator = "equals";
 
 function add (a, b) {
     return a + b;
@@ -55,13 +72,13 @@ function divide (a, b) {
 }
 
 function operate (a, b, operator) {
-    if (operator == `+`) {
+    if (operator == "plus") {
         return add(a, b);
-    } else if (operator == `-`) {
+    } else if (operator == "subtract") {
         return subtract(a, b);
-    } else if (operator == `*`) {
+    } else if (operator == "multiply") {
         return multiply(a, b);
-    } else if (operator == `/`) {
+    } else if (operator == "divide") {
         return divide(a, b);
     } else {
         return "Could not calculate.";
