@@ -1,3 +1,7 @@
+let numA = 0;
+let numB = 0;
+let operator = ``;
+
 function add (a, b) {
     return a + b;
 }
@@ -28,8 +32,4 @@ function operate (a, b, operator) {
         return "Could not calculate.";
     }
 }
-
-let numA = 0;
-let numB = 0;
-let operator = ``;
 
