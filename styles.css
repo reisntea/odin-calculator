@@ -20,6 +20,7 @@ h1 {
 }
 
 #display {
+    min-height: 1.2em;
     font-size: 40px;
     text-align: right;
     border: 1px solid;
