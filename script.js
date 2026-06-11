@@ -1,3 +1,5 @@
+// ADD AN ALL CLEAR BUTTON AND A NEGATIVE BUTTON
+
 const numberButtons = document.querySelectorAll(".number");
 const operatorButtons = document.querySelectorAll(".operator");
 const clearButton = document.querySelector("#ac");
@@ -6,7 +8,7 @@ const display = document.querySelector("#display")
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
         console.log(button.id);
-        updateDisplay(button.id);
+        runNumber(button.id);
     });
 });
 
@@ -22,37 +24,53 @@ clearButton.addEventListener("click", () => {
     clearDisplay();
 });
 
-function updateDisplay (number) {
-    if (display.textContent == 0 || display.textContent == "") {
-        display.textContent = number
-    } else {
-        display.textContent += number;
-    }
+// Should update number and then display that number. So it first displays numA and as you press numbers numA updates. 
+// Then when an operator is pressed it should check for that and then display numB.
+
+// If there is no valid operator or none at all, this updates numA. And sets numB to be nothing.
+// If a valid operator was pressed this updates numB.
+// For either, check if there is no value so 0 or null.
+// If so, allow the negative sign to be pressed.
+function runNumber (number) {
+    
 }
 
 function clearDisplay () {
     display.textContent = '';
 }
 
-function runOperation (symbol) {
-    // Checks if numA has a value, if not set it to the value in display. If so, set numB to the value in display.
-    if (numA == null) {
-        numA = display.textContent;
-    } else {
-        numB = display.textContent;
-    }
+// Ex. numA gets typed, and then an operator is pressed. So now updateDisplay should update numB
+// Then an operator is pressed again, since there's numA and numB and an operator, stuff gets done.
 
-    if (symbol == "equals" && operator != "equals") {
-        clearDisplay();
-        updateDisplay(operate(numA, numB, operator));
-        numA = display.textContent;
-    }
-    operator = symbol;
+// Ex. numA gets typed, and then an equal is pressed. Since there's no numB, do nothing.
+
+// Ex numA gets typed, then an operator is pressed, then numB gets typed. Then equals is pressed. So numA becomes the calculation and numB and operator stay the same.
+// Then equals is pressed again, so do the operation again with the new numA and the same numB. 
+// Then plus is pressed and no calculations since equals is invalid, but operation is updated.
+// Then minus is pressed and no calculations since there's no numB. 
+// Then equals is pressed so numA is subtracted from numA.
+
+
+
+// If an operator is pressed when there's no numA or numB, do nothing.
+
+// If equals was pressed, check for numA and numB and a valid operator exist.
+// If so, do calculations. And set numA to be what's displayed. And set numB to be nothing
+// If not, then check if numA and a valid operator exist
+// If so, set numB to also equal numA and then do calculations.
+// If not, do nothing. 
+
+// If anything else was pressed, check for numA and numB and a valid operator exist.
+// If so, do calculations. And set numA to be what's displayed.
+// If not, don't do calculations and set operator to be what was pressed.
+// Then in either case, set numB to be nothing.
+function runOperation (symbol) {
+    
 }
 
 let numA = null;
 let numB = null;
-let operator = "equals";
+let operator = "";
 
 function add (a, b) {
     return a + b;
